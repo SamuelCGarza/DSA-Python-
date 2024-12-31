@@ -3,7 +3,7 @@ Defines a matrix class to support simple matrix arithmetic.
 """
 from grid import Grid
 from arrays import Array
-# Write your code below:
+
 class Matrix(Grid):
 
     def __init__(self, rows, columns, fillValue = None):
