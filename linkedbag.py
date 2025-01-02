@@ -60,10 +60,21 @@ class LinkedBag(object):
         """Makes self become empty."""
         self.size = 0
         self.items = None
+        
+    def clone(self):
+        clone = LinkedBag(self)
+        return clone
     
     def add(self, item):
         """Adds item to self."""
-        self.items = Node(item, self.items)
+        new_node = Node(item)
+        if self.items is None:
+            self.items = new_node
+        else: 
+            probe = self.items
+            while probe.next != None:
+                probe = probe.next
+            probe.next = new_node
         self.size += 1
     
     def remove(self, item):
