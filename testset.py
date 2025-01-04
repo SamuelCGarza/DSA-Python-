@@ -1,10 +1,6 @@
-"""
-File: testset.py
-Author: Ken Lambert
-A tester program for set implementations.
-"""
 
 from arrayset import ArraySet
+from linkedset import LinkedSet
 
 def test(setType):
     """Expects a bag type as an argument and runs some tests
@@ -19,5 +15,5 @@ def test(setType):
         s.add(i)
     print("Expect the set's string:", s)
 
-test(ArraySet)
+test(LinkedSet)
 
