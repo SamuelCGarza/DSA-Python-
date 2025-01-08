@@ -1,5 +1,6 @@
 
 from arrays import Array
+from arraybag import ArrayBag
 
 class ArraySortedBag(object):
     """An array-based bag implementation."""
@@ -62,13 +63,31 @@ class ArraySortedBag(object):
                 return False
         return True
     
-    def __contains__(self):
-        pass
-    
+    def __contains__(self, target):
+        """Implements binary search for support in ArraySortedBag."""
+        
+        left = 0
+        right = len(self) - 1
+        while left <= right:
+            midpoint = (left + right) // 2
+            if target == self.items[midpoint]:
+                return midpoint 
+            elif target < self.items[midpoint]:
+                right = midpoint - 1
+            else:
+                left = midpoint + 1
+        return False
+                
     def count(self, item):
         """Returns the number of instances of item in self."""
         
-        return 0
+        index = 0
+        count = 0
+        while index < len(self):
+            if self.items[index] == item:
+                count += 1
+            index += 1
+        print(count, "instances of", item, "in", self)
     
     # Mutator methods
     def clear(self):
@@ -90,9 +109,19 @@ class ArraySortedBag(object):
             temp = Array(len(self.items) * 2)
             for i in range(len(self)):
                 temp[i] = self.items[i]
-            self.items = temp                      
-        self.items[len(self)] = item
-        self.size += 1
+            self.items = temp  
+            
+        if self.isEmpty() or item >= self.items[len(self) - 1]:
+            ArrayBag.add(self, item)
+        else:
+            index = 0
+            while item > self.items[index]:
+                index += 1
+            for i in range(len(self), index, -1):
+                self.items[i] = self.items[i - 1]
+            # Insert item and update size
+            self.items[index] = item
+            self.size += 1
         
     
     def remove(self, item):
@@ -100,6 +129,7 @@ class ArraySortedBag(object):
    
         if not item in self:
             raise KeyError(str(item) + " not in bag")
+        
         targetIndex = 0
         for targetItem in self:
             if targetItem == item:
